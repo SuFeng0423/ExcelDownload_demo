@@ -1,0 +1,109 @@
+</html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>excel 导出测试</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            text-align: center;
+            vertical-align: middle;
+            width: 800px;
+            font-size: 20px;
+        }
+        
+        button {
+            height: 30px;
+            width: 100px;
+            margin: 20px 20px;
+            background: yellowgreen;
+            border-radius: 10px;
+            outline: none;
+        }
+        
+        input {
+            height: 30px;
+            padding-left: 10px;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap" style="width:900px;margin:20px auto;">
+        <h3>js脚本 导出excel测试</h3>
+        <table id="tb" border="1" cellspacing="0" cellpadding="0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>姓名</td>
+                        <th>年龄</td>
+                            <th>座右铭</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>张三</td>
+                    <td>18</td>
+                    <td>走的人多了，变成了路。</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>李四</td>
+                    <td>88</td>
+                    <td>人人都有自己走的路，哪条属于自己呢？</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>王五</td>
+                    <td>81</td>
+                    <td>走别人的路，让他没道可走！</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <label>
+            姓名：<input type="text" autocomplete id="name" placeholder="请输入您的姓名..." >
+        </label><br>
+        <label>
+            年龄：<input type="text" autocomplete id="age" placeholder="请输入您的年龄...">
+        </label><br>
+        <label>
+            座右铭：<input type="text" autocomplete id="sex" placeholder="请输入您的座右铭..." >
+        </label><br>
+
+        <button id="add">添加信息</button>
+        <button id="out" onclick="btn_export()">导出文件</button>
+    </div>
+    <script src="./xlsx.core.min.js"></script>
+    <script src="./jquery.min.js"></script>
+    <script src="./excel.js"></script>
+
+    <script>
+        function btn_export() {
+            var table = document.querySelector("#tb");
+            var sheet = XLSX.utils.table_to_sheet(table); //将一个table对象转换成一个sheet对象
+            openDownloadDialog(sheet2blob(sheet), 'excel.xlsx');
+        }
+
+
+        var id = $("input").length + 1;
+        $(function() {
+            $("#add").click(function() {
+                var name = $("#name").val();
+                var age = $("#age").val();
+                var sex = $("#sex").val();
+                $("tbody").append("<tr><td>" + id + "</td><td>" + name + "</td> <td>" + age + "</td> <td>" + sex + "</td></tr>");
+                id++;
+                $("input").val('');
+            });
+        })
+    </script>
+</body>
+
+</html>
